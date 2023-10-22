@@ -5,11 +5,15 @@ part 'PlaylistModel.g.dart';
 @HiveType(typeId: 0)
 class PlaylistModel extends HiveObject {
   @HiveField(0)
-  late String title; // Song title
+  String playlistName; // Name of the playlist
 
   @HiveField(1)
-  late String movieName; // Movie name
+  List<String> songs; // List of songs
 
   @HiveField(2)
-  late String path; // Song path
+  String
+      image; // Path to playlist image (you can store the image path as a String)
+
+  PlaylistModel(
+      {required this.playlistName, required this.songs, required this.image});
 }

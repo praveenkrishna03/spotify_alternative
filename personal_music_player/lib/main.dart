@@ -44,7 +44,12 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        actions: [
+          // Add Hive DevTools to your app
+          //HiveDevTools(), // Add this line
+        ],
       ),
+
       body: Center(
         child: Text(
           'You have pushed the button this many times:',
