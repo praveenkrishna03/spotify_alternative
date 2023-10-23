@@ -49,13 +49,17 @@ class Create_Playlist_State extends State<Create_Playlist> {
     return imagePath;
   }
 
-  Future<void> addToBox() async {
+  Future<void> addToBox(
+      String playlistName, String imagePath, String description) async {
     final dataBox = await Hive.openBox<PlaylistModel>('playlistBox');
+
     final myPlaylist = PlaylistModel(
-      playlistName: 'My Playlist',
-      songs: ['Song 1', 'Song 2', 'Song 3'],
-      image: "/path/to/playlist_image.png",
-    );
+        playlistName: playlistName,
+        songs: [],
+        image: imagePath,
+        description: description
+        //description: description
+        );
     await dataBox.add(myPlaylist);
   }
 
@@ -67,7 +71,7 @@ class Create_Playlist_State extends State<Create_Playlist> {
       for (var i = 0; i < box.length; i++) {
         final playlist = box.getAt(i);
         print('Playlist Name: ${playlist?.playlistName}');
-        print('Songs: ${playlist?.songs}');
+        print('Songs: ${playlist?.image}');
         // Print other attributes as needed
       }
     } else {
@@ -75,6 +79,10 @@ class Create_Playlist_State extends State<Create_Playlist> {
     }
     await box.close(); // Close the box when you're done with it
   }
+
+  final TextEditingController _name_Controller = TextEditingController();
+
+  final TextEditingController _description_Controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -90,11 +98,13 @@ class Create_Playlist_State extends State<Create_Playlist> {
             // Text field for song title
             TextField(
               decoration: InputDecoration(labelText: 'Playlist Title'),
+              controller: _name_Controller,
               // Add logic to save the entered song title to the playlist
             ),
 
             TextField(
               decoration: InputDecoration(labelText: 'Playlist Description'),
+              controller: _description_Controller,
               // Add logic to save the entered song title to the playlist
             ),
 
@@ -173,7 +183,10 @@ class Create_Playlist_State extends State<Create_Playlist> {
             ),
             ElevatedButton(
               onPressed: () {
-                addToBox();
+                String playlistTitle = _name_Controller.text;
+                String playlistdescription = _description_Controller.text;
+
+                addToBox(playlistTitle, playlistImage!, playlistdescription);
 
                 print("done");
               },

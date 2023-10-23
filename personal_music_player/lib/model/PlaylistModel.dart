@@ -11,9 +11,14 @@ class PlaylistModel extends HiveObject {
   List<String> songs; // List of songs
 
   @HiveField(2)
-  String
-      image; // Path to playlist image (you can store the image path as a String)
+  String image;
+
+  @HiveField(3)
+  String description;
 
   PlaylistModel(
-      {required this.playlistName, required this.songs, required this.image});
+      {required this.playlistName,
+      required this.songs,
+      required this.image,
+      required this.description});
 }
