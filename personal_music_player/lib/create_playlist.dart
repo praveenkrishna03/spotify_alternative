@@ -1,6 +1,12 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 
 import 'model/PlaylistModel.dart';
 
@@ -10,15 +16,65 @@ class Create_Playlist extends StatefulWidget {
 }
 
 class Create_Playlist_State extends State<Create_Playlist> {
-  Box<PlaylistModel>? dataBox;
+  //late Box<PlaylistModel> dataBox;
   PlaylistModel? currUser;
+  String? playlistImage = null;
   void initState() {
     super.initState();
     Hive.initFlutter();
-    dataBox = Hive.box<PlaylistModel>("playlistBox");
-    currUser = dataBox?.get(1);
+    Hive.registerAdapter(PlaylistModelAdapter());
+
+    //openHiveBox();
+    //dataBox = Hive.box<PlaylistModel>("playlistBox");
+    //currUser = dataBox?.get(1);
   }
   //final playlistBox = Hive.box<PlaylistModel>('playlistBox');
+
+  /*Future<void> openHiveBox() async {
+    dataBox = await Hive.openBox<PlaylistModel>('playlistBox');
+  }*/
+
+  Future<String> saveImageLocally(String? filePath) async {
+    if (filePath == null) {
+      // Handle the case when filePath is null (no image picked)
+      return ''; // You can return an empty string or another default value
+    }
+
+    final appDocumentsDirectory = await getApplicationDocumentsDirectory();
+    final imagePath = '${appDocumentsDirectory.path}/playlist_image.png';
+
+    final file = File(filePath);
+    final savedFile = await file.copy(imagePath);
+
+    return imagePath;
+  }
+
+  Future<void> addToBox() async {
+    final dataBox = await Hive.openBox<PlaylistModel>('playlistBox');
+    final myPlaylist = PlaylistModel(
+      playlistName: 'My Playlist',
+      songs: ['Song 1', 'Song 2', 'Song 3'],
+      image: "/path/to/playlist_image.png",
+    );
+    await dataBox.add(myPlaylist);
+  }
+
+  Future<void> retrieveDataFromBox() async {
+    final box =
+        await Hive.openBox<PlaylistModel>('playlistBox'); // Open the box
+
+    if (box.isNotEmpty) {
+      for (var i = 0; i < box.length; i++) {
+        final playlist = box.getAt(i);
+        print('Playlist Name: ${playlist?.playlistName}');
+        print('Songs: ${playlist?.songs}');
+        // Print other attributes as needed
+      }
+    } else {
+      print('Box is empty');
+    }
+    await box.close(); // Close the box when you're done with it
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +99,11 @@ class Create_Playlist_State extends State<Create_Playlist> {
             ),
 
             Expanded(
-              child: Image.asset('images/audio_default.png'),
+              child: playlistImage != null
+                  ? Image.file(File(playlistImage!))
+                  : Image.asset('images/audio_default.png'),
             ),
+
             // Image selection option (You can use ImagePicker for this)
             // Replace this with an actual image selection widget
 
@@ -64,20 +123,38 @@ class Create_Playlist_State extends State<Create_Playlist> {
             */
 
             ElevatedButton(
-              onPressed: () {
-                //final playlistBox = Hive.box<PlaylistModel>('playlistBox');
-                //final retrievedPlaylist = playlistModel!.get(0);
-                // Change the index to access a specific playlist
-                //dataBox = Hive.box<PlaylistModel>("playlistBox");
-                //currUser = dataBox?.get(0);
-                if (currUser != null) {
-                  // Print the details of the retrieved playlist
-                  print("Retrieved playlist name: ${currUser?.playlistName}");
-                  //print("Retrieved playlist songs: ${retrievedPlaylist.songs}");
-                  //print("Retrieved playlist image: ${retrievedPlaylist.image}");
+              onPressed: () async {
+                final result = await FilePicker.platform.pickFiles(
+                  type: FileType.image,
+                  allowMultiple: false,
+                );
+                if (result != null) {
+                  PlatformFile file = result.files.first;
+
+                  print(file.name);
+                  print(file.bytes);
+                  print(file.size);
+                  print(file.extension);
+                  print(file.path);
                 } else {
-                  print(
-                      "Playlist not found"); // If the playlist at the specified index doesn't exist
+                  // User canceled the picker
+                }
+                if (result != null) {
+                  PlatformFile file = result.files.first;
+                  print(file
+                      .name); // Check the name of the file to verify it's the correct file.
+
+                  if (true) {
+                    // Successfully read the file bytes
+                    final savedImagePath = await saveImageLocally(file.path);
+                    setState(() {
+                      playlistImage = file.path;
+                    });
+                    print(savedImagePath);
+                  } else {
+                    // Handle the case when file.bytes is empty or null
+                    // This may indicate that the file couldn't be read
+                  }
                 }
               },
               child: Text('Change Image'),
@@ -86,20 +163,21 @@ class Create_Playlist_State extends State<Create_Playlist> {
             SizedBox(height: 20),
 
             // Add Song button
-
             ElevatedButton(
               onPressed: () {
-                final myPlaylist = PlaylistModel(
-                  playlistName: 'My Playlist',
-                  songs: ['Song 1', 'Song 2', 'Song 3'],
-                  image:
-                      '/path/to/playlist_image.png', // Replace with your actual image path
-                );
-                print("done");
+                retrieveDataFromBox();
 
-                // You can use a dialog or a separate screen to add songs
+                print("retrived");
               },
-              child: Text('Add Playlist'),
+              child: Text('Retrive Data'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                addToBox();
+
+                print("done");
+              },
+              child: Text('Create Playlist'),
             ),
           ],
         ),

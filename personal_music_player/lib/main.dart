@@ -3,10 +3,12 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:personal_music_player/create_playlist.dart';
 import 'Model/PlaylistModel.dart';
 
-void main() async {
-  await Hive.initFlutter();
-  Hive.registerAdapter(PlaylistModelAdapter());
-  await Hive.openBox<PlaylistModel>('playlistBox');
+late Box box;
+Future<void> main() async {
+  //await Hive.initFlutter();
+  //box = await Hive.openBox<PlaylistModel>('plalistBox');
+  //Hive.registerAdapter(PlaylistModelAdapter());
+  //await Hive.openBox<PlaylistModel>('playlistBox');
 
   runApp(const MyApp());
 }
