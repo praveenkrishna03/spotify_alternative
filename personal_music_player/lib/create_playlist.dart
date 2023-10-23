@@ -52,15 +52,14 @@ class Create_Playlist_State extends State<Create_Playlist> {
   Future<void> addToBox(
       String playlistName, String imagePath, String description) async {
     final dataBox = await Hive.openBox<PlaylistModel>('playlistBox');
-
+    print(description);
     final myPlaylist = PlaylistModel(
         playlistName: playlistName,
         songs: [],
-        image: imagePath,
-        description: description
-        //description: description
-        );
+        //image: imagePath,
+        description: description);
     await dataBox.add(myPlaylist);
+    await dataBox.close();
   }
 
   Future<void> retrieveDataFromBox() async {
@@ -71,12 +70,13 @@ class Create_Playlist_State extends State<Create_Playlist> {
       for (var i = 0; i < box.length; i++) {
         final playlist = box.getAt(i);
         print('Playlist Name: ${playlist?.playlistName}');
-        print('Songs: ${playlist?.image}');
+        print('Description: ${playlist?.description}');
         // Print other attributes as needed
       }
     } else {
       print('Box is empty');
     }
+
     await box.close(); // Close the box when you're done with it
   }
 
@@ -185,6 +185,8 @@ class Create_Playlist_State extends State<Create_Playlist> {
               onPressed: () {
                 String playlistTitle = _name_Controller.text;
                 String playlistdescription = _description_Controller.text;
+                print(playlistdescription);
+                print(playlistTitle);
 
                 addToBox(playlistTitle, playlistImage!, playlistdescription);
 

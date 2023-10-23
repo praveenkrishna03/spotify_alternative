@@ -11,14 +11,15 @@ class PlaylistModel extends HiveObject {
   List<String> songs; // List of songs
 
   @HiveField(2)
-  String image;
-
-  @HiveField(3)
   String description;
 
-  PlaylistModel(
-      {required this.playlistName,
-      required this.songs,
-      required this.image,
-      required this.description});
+  //@HiveField(3)
+  //String image;
+
+  PlaylistModel({
+    required this.playlistName,
+    required this.songs,
+    required this.description,
+    //required this.image, // Include the description in the constructor
+  });
 }

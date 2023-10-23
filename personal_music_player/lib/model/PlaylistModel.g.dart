@@ -19,22 +19,19 @@ class PlaylistModelAdapter extends TypeAdapter<PlaylistModel> {
     return PlaylistModel(
       playlistName: fields[0] as String,
       songs: (fields[1] as List).cast<String>(),
-      image: fields[2] as String,
-      description: fields[3] as String,
+      description: fields[2] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, PlaylistModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.playlistName)
       ..writeByte(1)
       ..write(obj.songs)
       ..writeByte(2)
-      ..write(obj.image)
-      ..writeByte(3)
       ..write(obj.description);
   }
 
