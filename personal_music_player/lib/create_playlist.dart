@@ -18,11 +18,12 @@ class Create_Playlist extends StatefulWidget {
 class Create_Playlist_State extends State<Create_Playlist> {
   //late Box<PlaylistModel> dataBox;
   PlaylistModel? currUser;
-  String? playlistImage = null;
+  String? playlistImage;
   void initState() {
     super.initState();
     Hive.initFlutter();
     Hive.registerAdapter(PlaylistModelAdapter());
+    //await Hive.openBox<PlaylistModel>('playlistBox');
 
     //openHiveBox();
     //dataBox = Hive.box<PlaylistModel>("playlistBox");
@@ -56,9 +57,10 @@ class Create_Playlist_State extends State<Create_Playlist> {
     final myPlaylist = PlaylistModel(
         playlistName: playlistName,
         songs: [],
-        //image: imagePath,
+        image: imagePath,
         description: description);
     await dataBox.add(myPlaylist);
+    //await dataBox.deleteFromDisk();
     await dataBox.close();
   }
 
@@ -70,6 +72,7 @@ class Create_Playlist_State extends State<Create_Playlist> {
       for (var i = 0; i < box.length; i++) {
         final playlist = box.getAt(i);
         print('Playlist Name: ${playlist?.playlistName}');
+        print('Playlist Image: ${playlist?.image}');
         print('Description: ${playlist?.description}');
         // Print other attributes as needed
       }
@@ -107,30 +110,14 @@ class Create_Playlist_State extends State<Create_Playlist> {
               controller: _description_Controller,
               // Add logic to save the entered song title to the playlist
             ),
+            SizedBox(height: 20),
 
             Expanded(
               child: playlistImage != null
                   ? Image.file(File(playlistImage!))
                   : Image.asset('images/audio_default.png'),
             ),
-
-            // Image selection option (You can use ImagePicker for this)
-            // Replace this with an actual image selection widget
-
-            // List of songs
-            /*
-            Expanded(
-              child: ListView.builder(
-                itemCount: songs.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(songs[index]),
-                    // Add an image icon or delete button to remove songs if needed
-                  );
-                },
-              ),
-            ),
-            */
+            SizedBox(height: 20),
 
             ElevatedButton(
               onPressed: () async {
@@ -156,15 +143,12 @@ class Create_Playlist_State extends State<Create_Playlist> {
 
                   if (true) {
                     // Successfully read the file bytes
-                    final savedImagePath = await saveImageLocally(file.path);
+                    //final savedImagePath = await saveImageLocally(file.path);
                     setState(() {
                       playlistImage = file.path;
                     });
-                    print(savedImagePath);
-                  } else {
-                    // Handle the case when file.bytes is empty or null
-                    // This may indicate that the file couldn't be read
-                  }
+                    //print(savedImagePath);
+                  } else {}
                 }
               },
               child: Text('Change Image'),
@@ -173,24 +157,26 @@ class Create_Playlist_State extends State<Create_Playlist> {
             SizedBox(height: 20),
 
             // Add Song button
-            ElevatedButton(
+            /*ElevatedButton(
               onPressed: () {
                 retrieveDataFromBox();
 
                 print("retrived");
               },
               child: Text('Retrive Data'),
-            ),
+            ),*/
             ElevatedButton(
               onPressed: () {
-                String playlistTitle = _name_Controller.text;
-                String playlistdescription = _description_Controller.text;
+                final playlistTitle = _name_Controller.text;
+                final playlistdescription = _description_Controller.text;
                 print(playlistdescription);
                 print(playlistTitle);
+                final image = playlistImage;
 
-                addToBox(playlistTitle, playlistImage!, playlistdescription);
+                addToBox(playlistTitle, image!, playlistdescription);
 
                 print("done");
+                Navigator.pop(context, true);
               },
               child: Text('Create Playlist'),
             ),

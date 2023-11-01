@@ -5,11 +5,9 @@ import 'Model/PlaylistModel.dart';
 
 late Box box;
 Future<void> main() async {
-  //await Hive.initFlutter();
-  //box = await Hive.openBox<PlaylistModel>('plalistBox');
-  //Hive.registerAdapter(PlaylistModelAdapter());
-  //await Hive.openBox<PlaylistModel>('playlistBox');
-
+  await Hive.initFlutter();
+  Hive.registerAdapter(PlaylistModelAdapter()); // Register the adapter
+  await Hive.openBox<PlaylistModel>('playlistBox');
   runApp(const MyApp());
 }
 
@@ -20,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Spotify_alternative',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
@@ -40,6 +38,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Future<List<PlaylistModel>> getAllPlaylists() async {
+    final box = await Hive.openBox<PlaylistModel>(
+        'playlistBox'); // Replace 'your_box_name' with the actual name of your box
+    final List<PlaylistModel> playlistList = box.values.toList();
+    await box.close();
+    return playlistList;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,12 +64,21 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => Create_Playlist(),
             ),
           );
+          final playlists = await getAllPlaylists();
+
+          for (int i = 0; i < playlists.length; i++) {
+            print('Playlist $i:');
+            print('Name: ${playlists[i].playlistName}');
+            print('Songs: ${playlists[i].songs}');
+            print('Description: ${playlists[i].description}');
+            //print('Image: ${playlists[i].image}');
+          }
           // Add the action you want for the floating button here.
         },
         child: Icon(Icons.add),
