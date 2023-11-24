@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "523009182602",
+    "project_id": "personal-spotify-95582",
+    "storage_bucket": "personal-spotify-95582.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523009182602:android:c4453669041bf7b379d673",
+        "android_client_info": {
+          "package_name": "com.example.personal_music_player"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5_WZ8fgYWSoSN1QF6TmUKmGxCjS6-cCE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
