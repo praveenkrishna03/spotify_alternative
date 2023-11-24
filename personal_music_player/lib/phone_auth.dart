@@ -74,7 +74,7 @@ class PhoneAuthPage_state extends State<PhoneAuthPage> {
                   ),
                   cursorColor: Colors.black,
                   controller: email_controller,
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintStyle:
