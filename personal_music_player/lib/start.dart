@@ -2,10 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:personal_music_player/home_page.dart';
-import 'package:personal_music_player/playlist_page.dart';
-import 'package:personal_music_player/downloads_page.dart';
-import 'package:personal_music_player/search_page.dart';
+import 'package:personal_music_player/copmonents/mini_player.dart';
+import 'package:personal_music_player/main_pages/home_page.dart';
+import 'package:personal_music_player/main_pages/downloads_page.dart';
+import 'package:personal_music_player/main_pages/playlist_page.dart';
+import 'package:personal_music_player/main_pages/search_page.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -30,7 +31,20 @@ class StartPage_State extends State<StartPage> {
   @override
   Widget build(BuildContext) {
     return Scaffold(
-      body: _pages[_currentIndex],
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          _pages[_currentIndex],
+          Positioned(
+            bottom: 16.0, // Adjust the position as needed
+            left: 0,
+            right: 0,
+            child: Center(
+              child: miniPlayer(), // Your elevated container widget
+            ),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: _onItemTapped,

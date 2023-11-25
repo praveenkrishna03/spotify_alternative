@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_music_player/create_playlist.dart';
-import 'package:personal_music_player/phone_auth.dart';
+import 'package:personal_music_player/auth/phone_auth.dart';
 import 'package:personal_music_player/start.dart';
 import 'package:pinput/pinput.dart';
 

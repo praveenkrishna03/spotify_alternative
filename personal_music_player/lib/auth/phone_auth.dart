@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_music_player/otp_page.dart';
+import 'package:personal_music_player/auth/login.dart';
+import 'package:personal_music_player/auth/otp_page.dart';
 import 'package:pinput/pinput.dart';
 
 //hello
@@ -118,6 +119,29 @@ class PhoneAuthPage_state extends State<PhoneAuthPage> {
                   ),
                 ),
               ]),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Color.fromARGB(0, 255, 255, 255),
+                    shadowColor: Color.fromARGB(0, 255, 255, 255),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'Login',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 17,
+                      fontFamily: 'Inria Sans',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  )),
               ElevatedButton(
                 onPressed: () async {
                   await FirebaseAuth.instance.verifyPhoneNumber(

@@ -12,8 +12,12 @@ class DownloadsPage_State extends State<DownloadsPage> {
   @override
   Widget build(BuildContext) {
     return Scaffold(
-        body: Center(
-      child: Text("Downloads"),
-    ));
+      backgroundColor: Colors.black,
+      body: Center(
+          child: Text(
+        'Downloads',
+        style: TextStyle(color: Colors.white),
+      )),
+    );
   }
 }

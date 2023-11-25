@@ -12,8 +12,12 @@ class SearchPage_State extends State<SearchPage> {
   @override
   Widget build(BuildContext) {
     return Scaffold(
+        backgroundColor: Colors.black,
         body: Center(
-      child: Text("Search"),
-    ));
+          child: Text(
+            "Search",
+            style: TextStyle(color: Colors.white),
+          ),
+        ));
   }
 }

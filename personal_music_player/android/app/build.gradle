@@ -81,4 +81,16 @@ dependencies {
     //implementation 'com.google.firebase:firebase-auth-ktx'
     //implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-analytics'
-}
+    //implementation files('spotify-app-remote-release-0.8.0')
+    //implementation 'com.spotify.android.appremote:spotify-app-remote-release-0.8.0'
+    
+    //implementation project(':spotify-app-remote')
+
+
+    //implementation 'com.google.code.gson:gson:2.8.6' // Required Gson dependency
+    //implementation(name: 'spotify-app-remote', ext: 'aar')
+
+    }
+
+    // your app dependencies
+

@@ -12,8 +12,12 @@ class PlaylistPage_State extends State<PlaylistPage> {
   @override
   Widget build(BuildContext) {
     return Scaffold(
+        backgroundColor: Colors.black,
         body: Center(
-      child: Text("Playlist"),
-    ));
+          child: Text(
+            "Playlist",
+            style: TextStyle(color: Colors.white),
+          ),
+        ));
   }
 }

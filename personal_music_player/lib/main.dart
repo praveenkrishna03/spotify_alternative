@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_music_player/create_playlist.dart';
-import 'package:personal_music_player/phone_auth.dart';
+import 'package:personal_music_player/auth/login.dart';
+import 'package:personal_music_player/auth/phone_auth.dart';
 import 'package:personal_music_player/constants.dart';
+import 'package:personal_music_player/start.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: PhoneAuthPage(),
+      home: StartPage(),
     );
   }
 }

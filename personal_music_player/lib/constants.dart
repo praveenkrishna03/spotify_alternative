@@ -4,4 +4,8 @@ class Constants {
   static String messagingSenderId = "523009182602";
   static String projectId = "personal-spotify-95582";
   //final primaryColor = const Color(0xFFee7b64);
+
+  static final String CLIENT_ID = "your_client_id";
+  static final String REDIRECT_URI = "http://com.yourdomain.yourapp/callback";
+  //SpotifyAppRemote mSpotifyAppRemote;
 }
