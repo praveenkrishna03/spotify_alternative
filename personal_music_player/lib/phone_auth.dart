@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:personal_music_player/otp_page.dart';
+import 'package:pinput/pinput.dart';
 
 //hello
 
@@ -8,21 +11,24 @@ class PhoneAuthPage extends StatefulWidget {
 }
 
 class PhoneAuthPage_state extends State<PhoneAuthPage> {
+  static String verify = "";
+  var country_code = "+91";
+  var number = "";
   final _formkey = GlobalKey<FormState>();
-  final email_controller = TextEditingController();
-  final password_controller = TextEditingController();
+  final phone_controller = TextEditingController();
+  //final password_controller = TextEditingController();
   bool isLogin = false;
   bool isLoading = false;
 
   void dispose_un() {
-    email_controller.dispose();
+    phone_controller.dispose();
     super.dispose();
   }
 
-  void dispose_pw() {
+  /*void dispose_pw() {
     password_controller.dispose();
     super.dispose();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -57,34 +63,74 @@ class PhoneAuthPage_state extends State<PhoneAuthPage> {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              Container(
-                width: 250,
-                height: 40,
-                decoration: ShapeDecoration(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(17),
+              Row(children: [
+                SizedBox(
+                  width: 50,
+                ),
+                Container(
+                  width: 50,
+                  height: 40,
+                  decoration: ShapeDecoration(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(17),
+                    ),
+                  ),
+                  child: Column(children: [
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "+91",
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    )
+                  ]),
+                ),
+                Container(
+                  width: 250,
+                  height: 40,
+                  decoration: ShapeDecoration(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(17),
+                    ),
+                  ),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color.fromARGB(
+                          255, 0, 0, 0), // Set the input text color here
+                    ),
+                    onChanged: (value) {
+                      number = value;
+                    },
+                    cursorColor: Colors.black,
+                    controller: phone_controller,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintStyle:
+                          TextStyle(color: Color.fromARGB(255, 109, 109, 109)),
+                      hintText: 'Enter your phone number',
+                    ),
                   ),
                 ),
-                child: TextFormField(
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color.fromARGB(
-                        255, 0, 0, 0), // Set the input text color here
-                  ),
-                  cursorColor: Colors.black,
-                  controller: email_controller,
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintStyle:
-                        TextStyle(color: Color.fromARGB(255, 109, 109, 109)),
-                    hintText: 'Enter your phone number',
-                  ),
-                ),
-              ),
+              ]),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  await FirebaseAuth.instance.verifyPhoneNumber(
+                    phoneNumber: '${country_code + number}',
+                    verificationCompleted: (PhoneAuthCredential credential) {},
+                    verificationFailed: (FirebaseAuthException e) {},
+                    codeSent: (String verificationId, int? resendToken) {
+                      PhoneAuthPage_state.verify = verificationId;
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => OTPAuthPage()));
+                    },
+                    codeAutoRetrievalTimeout: (String verificationId) {},
+                  );
                   //if (_formkey.currentState!.validate()) {
                   //signInWithEmailAndPassword();
                 },

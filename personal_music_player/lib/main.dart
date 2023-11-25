@@ -1,9 +1,24 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_music_player/create_playlist.dart';
 import 'package:personal_music_player/phone_auth.dart';
+import 'package:personal_music_player/constants.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp(
+        options: FirebaseOptions(
+      apiKey: Constants.apiKey,
+      appId: Constants.appId,
+      messagingSenderId: Constants.messagingSenderId,
+      projectId: Constants.projectId,
+    ));
+    runApp(const MyApp());
+  } catch (e) {
+    print('Error initializing Firebase: $e');
+    // Handle the error condition here (e.g., show an error message)
+  }
 }
 
 class MyApp extends StatelessWidget {
