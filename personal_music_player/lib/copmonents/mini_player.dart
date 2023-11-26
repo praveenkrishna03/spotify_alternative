@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:personal_music_player/auth/login.dart';
+import 'package:personal_music_player/other_pages/music_player.dart';
 
 class miniPlayer extends StatefulWidget {
   @override
@@ -42,9 +43,16 @@ class miniPlayer_state extends State<miniPlayer> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => musicPlayer(),
+            ),
+          );
+        },
         child: Card(
-          color: const Color.fromARGB(130, 255, 255, 255),
+          color: Color.fromARGB(197, 88, 137, 90),
           elevation: 8, // Change the elevation as needed
           shape: RoundedRectangleBorder(
             borderRadius:
@@ -52,10 +60,10 @@ class miniPlayer_state extends State<miniPlayer> {
           ),
           child: SizedBox(
             width: double.infinity,
-            height: 80, // To stretch to the full available width
+            height: 60, // To stretch to the full available width
             child: Container(
                 //color: const Color.fromARGB(113, 0, 0, 0),
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(7.5),
                 child: Row(
                   children: [
                     Container(
@@ -82,7 +90,7 @@ class miniPlayer_state extends State<miniPlayer> {
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 18),
+                                fontSize: 15),
                           ),
                           SizedBox(
                             // Adjust the height for better visibility
@@ -92,7 +100,13 @@ class miniPlayer_state extends State<miniPlayer> {
                               child: Text(
                                 "Pradeep Kumar, Dhibu Ninan Thomas", // Your long text here
                                 style: TextStyle(
-                                  color: Color.fromARGB(177, 255, 255, 255),
+                                  color: Color.fromARGB(
+                                    160,
+                                    255,
+                                    255,
+                                    255,
+                                  ),
+                                  fontSize: 12,
                                 ),
                               ),
                             ),
@@ -102,12 +116,18 @@ class miniPlayer_state extends State<miniPlayer> {
                     ),
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(Icons.add_circle_outlined),
+                      icon: Icon(
+                        Icons.add_circle_outlined,
+                        color: const Color.fromARGB(255, 192, 253, 194),
+                      ),
                       iconSize: 35,
                     ),
                     IconButton(
                         onPressed: () {},
-                        icon: Icon(Icons.play_arrow_rounded),
+                        icon: Icon(
+                          Icons.play_arrow_rounded,
+                          color: Colors.white,
+                        ),
                         iconSize: 35)
                   ],
                 )),

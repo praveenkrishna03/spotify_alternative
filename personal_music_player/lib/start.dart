@@ -17,7 +17,7 @@ class StartPage_State extends State<StartPage> {
   final List<Widget> _pages = [
     HomePage(),
     SearchPage(),
-    PlaylistPage(),
+    myPlaylistPage(),
     DownloadsPage()
   ];
 
@@ -36,7 +36,7 @@ class StartPage_State extends State<StartPage> {
         children: [
           _pages[_currentIndex],
           Positioned(
-            bottom: 16.0, // Adjust the position as needed
+            bottom: 10.0, // Adjust the position as needed
             left: 0,
             right: 0,
             child: Center(
@@ -56,19 +56,19 @@ class StartPage_State extends State<StartPage> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: '',
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: '',
+            label: 'Search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.library_music),
-            label: '',
+            label: 'Library',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.download_rounded),
-            label: '',
+            label: 'Downloads',
           ),
         ],
       ),

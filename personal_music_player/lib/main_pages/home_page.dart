@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:personal_music_player/Constants.dart';
 //import 'package:spotify_sdk/spotify_sdk.dart';
 import 'package:flutter/services.dart';
+import 'package:personal_music_player/copmonents/mix_tile.dart';
 import 'package:personal_music_player/copmonents/playlist_tile.dart';
 
 class HomePage extends StatefulWidget {
@@ -40,8 +41,10 @@ class HomePage_State extends State<HomePage> {
                   height: 60, // Height of the container
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color.fromARGB(
-                        255, 243, 243, 243), // Change color as needed
+                    image: DecorationImage(
+                      image: AssetImage('images/logo.png'),
+                      fit: BoxFit.fill,
+                    ), // Change color as needed
                   ),
                 ),
                 SizedBox(
@@ -67,13 +70,44 @@ class HomePage_State extends State<HomePage> {
                   Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
+                        " Your Mix's",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                        ),
+                      )),
+                  Container(
+                    height: 220,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: <Widget>[
+                          // Replace these with your desired widgets
+                          mixTile(),
+                          mixTile(),
+                          mixTile(),
+                          mixTile()
+                          // Add more containers as needed
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
                         " All Playlists",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 25,
                         ),
                       )),
-                  playlistTile()
+                  playlistTile(),
+                  playlistTile(),
+                  playlistTile(),
+                  playlistTile(),
+                  SizedBox(
+                    height: 100,
+                  )
                 ],
               ),
             ),
