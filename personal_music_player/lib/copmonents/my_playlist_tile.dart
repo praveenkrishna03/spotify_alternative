@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:personal_music_player/other_pages/playlist_page.dart';
 
 class myPlaylistTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => playlistPage(),
+            ),
+          );
+        },
         child: Card(
           color: Color.fromARGB(197, 255, 255, 255),
           elevation: 8, // Change the elevation as needed

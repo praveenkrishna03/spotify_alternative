@@ -37,8 +37,8 @@ class HomePage_State extends State<HomePage> {
                 Container(
                   margin: EdgeInsets.only(
                       left: 0, top: 0), // Adjust margin as needed
-                  width: 60, // Width of the container
-                  height: 60, // Height of the container
+                  width: 50, // Width of the container
+                  height: 50, // Height of the container
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(

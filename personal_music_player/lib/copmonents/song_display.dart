@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:personal_music_player/auth/login.dart';
 import 'package:personal_music_player/other_pages/music_player.dart';
 
-class miniPlayer extends StatefulWidget {
+class songDisplay extends StatefulWidget {
   @override
-  miniPlayer_state createState() => miniPlayer_state();
+  songDisplay_state createState() => songDisplay_state();
 }
 
-class miniPlayer_state extends State<miniPlayer> {
+class songDisplay_state extends State<songDisplay> {
   ScrollController _scrollController = ScrollController();
   Timer? _scrollTimer;
   bool shouldScroll = true;
@@ -52,7 +52,7 @@ class miniPlayer_state extends State<miniPlayer> {
           );
         },
         child: Card(
-          color: Color.fromARGB(197, 88, 137, 90),
+          color: Color.fromARGB(197, 0, 0, 0),
           elevation: 8, // Change the elevation as needed
           shape: RoundedRectangleBorder(
             borderRadius:
@@ -81,7 +81,7 @@ class miniPlayer_state extends State<miniPlayer> {
                       width: 15,
                     ),
                     SizedBox(
-                      width: 200,
+                      width: 220,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -117,10 +117,10 @@ class miniPlayer_state extends State<miniPlayer> {
                     IconButton(
                       onPressed: () {},
                       icon: Icon(
-                        Icons.favorite_border,
+                        Icons.more_vert,
                         color: const Color.fromARGB(255, 192, 253, 194),
                       ),
-                      iconSize: 35,
+                      iconSize: 25,
                     ),
                     IconButton(
                         onPressed: () {},
@@ -128,7 +128,7 @@ class miniPlayer_state extends State<miniPlayer> {
                           Icons.play_arrow_rounded,
                           color: Colors.white,
                         ),
-                        iconSize: 35)
+                        iconSize: 25)
                   ],
                 )),
           ),

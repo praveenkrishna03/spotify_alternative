@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:personal_music_player/other_pages/playlist_page.dart';
 
 class playlistTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => playlistPage(),
+          ),
+        );
+      },
       child: Container(
           margin: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 10),
           height: 200,
